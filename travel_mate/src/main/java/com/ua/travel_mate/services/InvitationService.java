@@ -12,7 +12,6 @@ import java.util.Optional;
 public class InvitationService {
     private final InvitationRepository invitationRepository;
 
-    @Autowired
     public InvitationService(InvitationRepository invitationRepository) {
         this.invitationRepository = invitationRepository;
     }

@@ -2,7 +2,6 @@ package com.ua.travel_mate.controllers;
 
 import com.ua.travel_mate.entities.Invitation;
 import com.ua.travel_mate.services.InvitationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
 public class InvitationController {
     private final InvitationService invitationService;
 
-    @Autowired
     public InvitationController(InvitationService invitationService) {
         this.invitationService = invitationService;
     }
