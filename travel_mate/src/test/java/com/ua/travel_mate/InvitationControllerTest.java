@@ -32,6 +32,13 @@ public class InvitationControllerTest {
 
     private Invitation invitation;
 
+    @BeforeEach
+    void setUp() {
+
+        invitation = new Invitation();
+        invitation.setId(1);
+    }
+
     @Test
     public void testGetAllInvitations() throws Exception {
 
@@ -58,11 +65,6 @@ public class InvitationControllerTest {
                 .andExpect(jsonPath("$.id").value(1));
     }
 
-    @BeforeEach
-    void setUp() {
-        invitation = new Invitation();
-        invitation.setId(1);
-    }
 
     @Test
     public void testSaveInvitation() throws Exception {
