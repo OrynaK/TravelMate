@@ -30,9 +30,10 @@ public class InvitationController {
     }
 
     @PostMapping
-    public ResponseEntity<Invitation> createInvitation(@RequestBody Invitation invitation) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Invitation createInvitation(@RequestBody Invitation invitation) {
         Invitation createdInvitation = invitationService.saveInvitation(invitation);
-        return new ResponseEntity<>(createdInvitation, HttpStatus.CREATED);
+        return createdInvitation;
     }
 
     @PutMapping("/{id}")
@@ -44,9 +45,8 @@ public class InvitationController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Invitation> deleteInvitation(@PathVariable("id") Integer invitationId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteInvitation(@PathVariable("id") Integer invitationId) {
         invitationService.deleteInvitation(invitationId);
-        return ResponseEntity.noContent().build();
-
     }
 }
