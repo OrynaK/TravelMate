@@ -13,6 +13,7 @@ import java.time.Instant;
 @Table(name = "invitation")
 public class Invitation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -32,9 +33,5 @@ public class Invitation {
     @Lob
     @Column(name = "status")
     private String status;
-
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "created_at")
-    private Instant createdAt;
 
 }

@@ -2,6 +2,9 @@ package com.ua.travel_mate.controllers;
 
 import com.ua.travel_mate.entities.Invitation;
 import com.ua.travel_mate.services.InvitationService;
+import org.springframework.data.relational.core.sql.In;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +30,9 @@ public class InvitationController {
     }
 
     @PostMapping
-    public Invitation createInvitation(@RequestBody Invitation invitation) {
-        return invitationService.saveInvitation(invitation);
+    public ResponseEntity<Invitation> createInvitation(@RequestBody Invitation invitation) {
+        Invitation createdInvitation = invitationService.saveInvitation(invitation);
+        return new ResponseEntity<>(createdInvitation, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -40,7 +44,9 @@ public class InvitationController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteInvitation(@PathVariable("id") Integer invitationId) {
+    public ResponseEntity<Invitation> deleteInvitation(@PathVariable("id") Integer invitationId) {
         invitationService.deleteInvitation(invitationId);
+        return ResponseEntity.noContent().build();
+
     }
 }
