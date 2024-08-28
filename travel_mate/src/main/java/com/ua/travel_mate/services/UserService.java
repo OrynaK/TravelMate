@@ -1,6 +1,6 @@
 package com.ua.travel_mate.services;
 
-import com.ua.travel_mate.entities.User;
+import com.ua.travel_mate.entities.Users;
 import com.ua.travel_mate.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,16 +17,16 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(Integer userId) {
+    public Optional<Users> getUserById(Integer userId) {
         return userRepository.findById(userId);
     }
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public Users saveUser(Users users) {
+        return userRepository.save(users);
     }
 
     public void deleteUser(Integer userId) {

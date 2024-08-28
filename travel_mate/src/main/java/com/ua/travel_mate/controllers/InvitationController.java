@@ -32,8 +32,7 @@ public class InvitationController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Invitation createInvitation(@RequestBody Invitation invitation) {
-        Invitation createdInvitation = invitationService.saveInvitation(invitation);
-        return createdInvitation;
+        return invitationService.saveInvitation(invitation);
     }
 
     @PutMapping("/{id}")

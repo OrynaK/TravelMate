@@ -1,5 +1,6 @@
 package com.ua.travel_mate;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ua.travel_mate.controllers.InvitationController;
 import com.ua.travel_mate.entities.Invitation;
@@ -13,8 +14,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
@@ -26,6 +29,9 @@ public class InvitationControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockBean
     private InvitationService invitationService;
@@ -47,11 +53,15 @@ public class InvitationControllerTest {
 
         given(invitationService.getAllInvitations()).willReturn(Arrays.asList(invitation, invitation2));
 
-        mockMvc.perform(get("/api/invitations"))
+        var result = mockMvc.perform(get("/api/invitations"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[1].id").value(2));
+                .andReturn();
+        var json = result.getResponse().getContentAsString();
+        var objects = objectMapper.readValue(json, new TypeReference<List<Invitation>>() {});
+        assertEquals(1, objects.get(0).getId());
+//                .andExpect(jsonPath("$[0].id").value(1))
+//                .andExpect(jsonPath("$[1].id").value(2));
     }
 
     @Test

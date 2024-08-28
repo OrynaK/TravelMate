@@ -3,18 +3,22 @@ package com.ua.travel_mate.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
-public class User {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users")
+public class Users {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -45,16 +49,13 @@ public class User {
     @Column(name = "profile_picture")
     private String profilePicture;
 
-    @Lob
     @Column(name = "bio")
     private String bio;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updated_at")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
 
 }

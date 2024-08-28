@@ -104,4 +104,24 @@ public class StringCalculatorTest {
         assertEquals(2, calculator.add("1001,2"));
         assertEquals(4, calculator.add("1001,2,1000,2"));
     }
+
+    @Test
+    void testAdd_Delimiter() {
+        assertEquals(3, calculator.add("//;\n1;2"));
+    }
+
+    @Test
+    void testAdd_DelimiterAnySize() {
+        assertEquals(6, calculator.add("//[***]\n1***2***3"));
+    }
+
+    @Test
+    void testAdd_MultipleDelimiter() {
+        assertEquals(6, calculator.add("//[*][%]\n1*2%3"));
+    }
+
+    @Test
+    void testAdd_MultipleDelimiterAnySize() {
+        assertEquals(6, calculator.add("//[*][%&]\n1*2%&3"));
+    }
 }
