@@ -1,6 +1,7 @@
 package com.ua.travel_mate;
 
 import com.ua.travel_mate.entities.Users;
+import com.ua.travel_mate.testData.UsersTestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,9 +51,7 @@ public class UserControllerIntegrationTests {
 
     @Test
     void testCreateUser() {
-        Users user = Users.builder().username("john_doe").email("john.doe@example.com").passwordHash("hashed_password")
-                .firstname("John").lastname("Doe").profilePicture("profile.jpg").bio("Software Developer").createdAt(LocalDateTime.now()).updatedAt(LocalDateTime.now())
-                .build();
+        Users user = UsersTestData.getUser().username("Tad").email("tad@example.com").build();
         String createUrl = "http://localhost:" + port + "/api/users";
         ResponseEntity<Users> response = restTemplate.postForEntity(createUrl, user, Users.class);
 
@@ -63,9 +62,7 @@ public class UserControllerIntegrationTests {
 
     @Test
     void testGetUserById() {
-        Users user = Users.builder().username("jane_doe").email("jane.doe@example.com").passwordHash("hashed_password")
-                .firstname("Jane").lastname("Doe").profilePicture("profile.jpg").bio("Product Manager").createdAt(LocalDateTime.now()).updatedAt(LocalDateTime.now())
-                .build();
+        Users user = UsersTestData.getUser().username("jane").email("jane@example.com").build();
         Users createdUser = createUser(user);
 
         String getUrl = "http://localhost:" + port + "/api/users/" + createdUser.getId();
@@ -78,10 +75,7 @@ public class UserControllerIntegrationTests {
 
     @Test
     void testUpdateUser() {
-        Users user = Users.builder().username("alice_smith").email("alice.smith@example.com").passwordHash("hashed_password")
-                .firstname("Alice")
-                .lastname("Smith").profilePicture("profile.jpg").bio("UX Designer").createdAt(LocalDateTime.now()).updatedAt(LocalDateTime.now())
-                .build();
+        Users user = UsersTestData.getUser().username("Alice").email("alice@example.com").build();
         Users createdUser = createUser(user);
 
         createdUser.setFirstname("Alice Updated");
@@ -96,9 +90,8 @@ public class UserControllerIntegrationTests {
 
     @Test
     void testDeleteUser() {
-        Users user = Users.builder().username("bob_jones").email("bob.jones@example.com").passwordHash("hashed_password")
-                .firstname("Bob").lastname("Jones").profilePicture("profile.jpg").bio("Marketing Specialist").createdAt(LocalDateTime.now()).updatedAt(LocalDateTime.now())
-                .build();
+        Users user = UsersTestData.getUser().username("Bob").email("bob@example.com").build();
+
 
         String deleteUrl = "http://localhost:" + port + "/api/users/" + createUser(user).getId();
         ResponseEntity<Void> response = restTemplate.exchange(deleteUrl, HttpMethod.DELETE, null, Void.class);
