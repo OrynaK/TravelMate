@@ -1,22 +1,17 @@
 package com.ua.travel_mate;
 
+import com.ua.travel_mate.containers.MySQLTestContainer;
 import com.ua.travel_mate.entities.Users;
+import com.ua.travel_mate.repositories.UserRepository;
 import com.ua.travel_mate.testData.UsersTestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
-import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -25,29 +20,10 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
-public class UserControllerIntegrationTests {
-
-    @LocalServerPort
-    private int port;
+public class UserControllerIntegrationTests extends MySQLTestContainer {
 
     @Autowired
-    private TestRestTemplate restTemplate;
-
-    static final MySQLContainer MY_SQL_CONTAINER;
-
-
-    static {
-        MY_SQL_CONTAINER = new MySQLContainer("mysql:8");
-        MY_SQL_CONTAINER.start();
-    }
-
-    @DynamicPropertySource
-    static void configureTestProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", MY_SQL_CONTAINER::getJdbcUrl);
-        registry.add("spring.datasource.username", MY_SQL_CONTAINER::getUsername);
-        registry.add("spring.datasource.password", MY_SQL_CONTAINER::getPassword);
-        registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
-    }
+    private UserRepository repository;
 
     @Test
     void testCreateUser() {
@@ -91,7 +67,6 @@ public class UserControllerIntegrationTests {
     @Test
     void testDeleteUser() {
         Users user = UsersTestData.getUser().username("Bob").email("bob@example.com").build();
-
 
         String deleteUrl = "http://localhost:" + port + "/api/users/" + createUser(user).getId();
         ResponseEntity<Void> response = restTemplate.exchange(deleteUrl, HttpMethod.DELETE, null, Void.class);
