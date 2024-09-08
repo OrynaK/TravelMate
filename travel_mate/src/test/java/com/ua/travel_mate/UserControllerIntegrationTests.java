@@ -22,9 +22,6 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @Testcontainers
 public class UserControllerIntegrationTests extends MySQLTestContainer {
 
-    @Autowired
-    private UserRepository repository;
-
     @Test
     void testCreateUser() {
         Users user = UsersTestData.getUser().username("Tad").email("tad@example.com").build();
