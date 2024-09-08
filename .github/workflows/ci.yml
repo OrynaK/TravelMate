@@ -19,8 +19,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Navigate to the correct directory
-        run: cd travel_mate
       - name: Build with Maven
         run: mvn -B package --file travel_mate/pom.xml
 
