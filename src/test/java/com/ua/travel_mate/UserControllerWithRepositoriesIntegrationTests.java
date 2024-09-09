@@ -21,6 +21,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 public class UserControllerWithRepositoriesIntegrationTests extends MySQLTestContainer {
+
     @Autowired
     private UserRepository repository;
 
