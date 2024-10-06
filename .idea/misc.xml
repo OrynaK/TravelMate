@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/travel_mate/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/producer/pom.xml" />
+        <option value="$PROJECT_DIR$/emailSender/pom.xml" />
       </list>
     </option>
   </component>

@@ -25,5 +25,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build with Maven
-        run: mvn --file pom.xml clean install
+      - name: Build Consumer Module
+        run: mvn --file emailSender/pom.xml clean install
+
+      - name: Build Producer Module
+        run: mvn --file producer/pom.xml clean install
