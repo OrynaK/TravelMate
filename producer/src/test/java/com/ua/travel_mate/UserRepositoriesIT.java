@@ -4,26 +4,26 @@ import com.ua.travel_mate.containers.MySQLTestContainer;
 import com.ua.travel_mate.entities.Users;
 import com.ua.travel_mate.repositories.UserRepository;
 import com.ua.travel_mate.testData.UsersTestData;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
-public class UserControllerWithRepositoriesIntegrationTests extends MySQLTestContainer {
+public class UserRepositoriesIT extends MySQLTestContainer {
 
     @Autowired
     private UserRepository repository;
+
+    @AfterEach
+    void doDelete() {
+        repository.deleteAll();
+    }
 
     @Test
     void testCreateUser() {
