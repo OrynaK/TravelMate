@@ -1,12 +1,17 @@
 package com.ua.travel_mate.controllers;
 
 import com.ua.travel_mate.entities.Users;
+import com.ua.travel_mate.messages.UserMessage;
+import com.ua.travel_mate.monitor.ServiceMonitor;
 import com.ua.travel_mate.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,10 +21,10 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, UserMessage> kafkaTemplate;
 
     @Autowired
-    public UserController(UserService userService, KafkaTemplate<String, String> kafkaTemplate) {
+    public UserController(UserService userService, KafkaTemplate<String, UserMessage> kafkaTemplate) {
         this.userService = userService;
         this.kafkaTemplate = kafkaTemplate;
     }
@@ -38,10 +43,17 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Users> createUser(@RequestBody Users users) {
         try {
+            ServiceMonitor monitor = new ServiceMonitor();
+            monitor.initializeFlow();
 
             Users savedUser = userService.saveUser(users);
-            log.info("Sending message to kafka: {}", savedUser.getEmail());
-            kafkaTemplate.send("user-created", savedUser.getEmail());
+            UserMessage message = new UserMessage(savedUser.getFirstname(), savedUser.getEmail());
+            log.info("FlowId: " + monitor.getFlowId() + ". Sending message to kafka: {}", message);
+            Message<UserMessage> userMessage = MessageBuilder.withPayload(message)
+                    .setHeader(KafkaHeaders.TOPIC, "user-created")
+                    .setHeader("InitialFlowId", monitor.getFlowId())
+                    .setHeader("InitialServiceName", this.getClass().getName()).build();
+            kafkaTemplate.send(userMessage);
             return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
 
         } catch (Exception e) {

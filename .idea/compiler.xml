@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="travel_mate" />
         <module name="consumer" />
+        <module name="travel_mate (2) (com.ua)" />
       </profile>
     </annotationProcessing>
   </component>
@@ -16,6 +17,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="consumer" options="-parameters" />
       <module name="travel_mate" options="-parameters" />
+      <module name="travel_mate (1) (com.example)" options="-parameters" />
+      <module name="travel_mate (2) (com.ua)" options="-parameters" />
     </option>
   </component>
 </project>
