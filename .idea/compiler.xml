@@ -7,17 +7,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="travel_mate (1) (com.ua)" />
         <module name="travel_mate" />
         <module name="consumer" />
-        <module name="travel_mate (2) (com.ua)" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="travel_mate (2) (com.ua)" target="17" />
+      <module name="TravelMate" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="consumer" options="-parameters" />
       <module name="travel_mate" options="-parameters" />
-      <module name="travel_mate (1) (com.example)" options="-parameters" />
+      <module name="travel_mate (1) (com.ua)" options="-parameters" />
       <module name="travel_mate (2) (com.ua)" options="-parameters" />
     </option>
   </component>

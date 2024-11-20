@@ -2,9 +2,7 @@ package com.ua.travel_mate.controllers;
 
 import com.ua.travel_mate.entities.Invitation;
 import com.ua.travel_mate.services.InvitationService;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

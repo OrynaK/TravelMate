@@ -1,0 +1,87 @@
+/*
+ * This file was generated for managing the TravelMate producer module.
+ * Contains Gradle configuration for a Java library with Maven publishing.
+ */
+
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id("org.springframework.boot") version "3.3.5"
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.ua'
+version = '0.0.1-SNAPSHOT'
+description = 'travel_mate_producer'
+
+// Встановлення версій Java
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    // Основні залежності Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Liquibase
+    api 'org.liquibase:liquibase-core'
+
+    // MySQL Driver
+    implementation 'com.mysql:mysql-connector-j'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    // Jackson Datatype for Java 8 Time API
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+    // Kafka
+    api 'org.springframework.kafka:spring-kafka'
+
+    // Додаткові залежності
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'jakarta.validation:jakarta.validation-api'
+    implementation 'org.hibernate.validator:hibernate-validator'
+    implementation 'jakarta.el:jakarta.el-api:6.0.1'
+
+    // Тестові залежності
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testImplementation 'org.testcontainers:mysql'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.springframework:spring-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+// Налаштування компіляції Java
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+// Налаштування генерації документації (Javadoc)
+tasks.withType(Javadoc) {
+    options {
+        encoding = 'UTF-8'
+    }
+}

@@ -1,10 +1,9 @@
 package com.ua.travel_mate.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
@@ -26,8 +25,6 @@ public class Trip {
     @JoinColumn(name = "user_id")
     private Users users;
 
-    @Size(max = 255)
-    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
